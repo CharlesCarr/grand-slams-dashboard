@@ -10,13 +10,23 @@ import {
 import { TabsContent } from "@/components/ui/tabs";
 import useGetTabContent from "../hooks/useGetTabContent";
 import { Overview } from "./overview";
-import { RecentSales } from "./recent-sales";
-import { ChampionInfo, SlamData } from "../utils";
+import { RecentSlams } from "./recent-slams";
+import {
+  ChampionInfo,
+  SlamData,
+  getFinalAppearances,
+  getTabDisplayName,
+} from "../utils";
 import { useAtomValue } from "jotai";
 import { tourAtom } from "./tourSelect";
 import { useEffect } from "react";
 
-export type TabsType = "all" | "australian-open" | "french-open" | "wimbledon" | "us-open";
+export type TabsType =
+  | "all"
+  | "australian-open"
+  | "french-open"
+  | "wimbledon"
+  | "us-open";
 
 interface SingleTabContentProps {
   tabValue: TabsType;
@@ -43,32 +53,47 @@ function SingleTabContent({
     console.log("tabData changed:", tabData);
   }, [tabData]);
 
+  // TO DO: Change loader to the tinted / dark tab/card that I have seen before
   if (isLoading) return <p>Loading...</p>;
 
   return (
     <TabsContent value={tabValue} className="space-y-4">
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
         {tabData?.slice(0, 4).map((player: ChampionInfo, index: number) => {
           return (
             <Card key={index}>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardHeader className="hidden sm:flex flex-row items-center justify-between space-y-0 sm:pb-2">
                 <CardTitle className="text-sm font-medium">
-                  {index + 1}
+                  {`#${index + 1}`}
                 </CardTitle>
                 <p>{player.nationality}</p>
               </CardHeader>
               <CardContent>
-                <div className="text-xl font-bold">{`${player.playerName} - ${player.titles} titles`}</div>
-                <p className="text-xs text-muted-foreground">
-                  +20.1% from last month
+                <div className="text-lg sm:text-xl font-bold flex pt-5 sm:pt-0">
+                  <span className="block sm:hidden mr-2">{`${
+                    index + 1
+                  }.`}</span>
+                  {player.playerName}
+                  <span className="font-normal ml-2 sm:ml-0">{`  - ${player.titles} titles`}</span>
+                </div>
+                <p className="ml-6 sm:ml-0 text-xs text-muted-foreground">
+                  {`${getFinalAppearances(
+                    mensData,
+                    womensData,
+                    player.playerName,
+                    tour,
+                    tabValue
+                  )} ${
+                    tabValue === "all" ? "major" : getTabDisplayName(tabValue)
+                  } final appearances.`}
                 </p>
               </CardContent>
             </Card>
           );
         })}
       </div>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-        <Card className="col-span-4">
+      <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-7">
+        <Card className="col-span-1 sm:col-span-4">
           <CardHeader>
             <CardTitle>Leaderboard</CardTitle>
           </CardHeader>
@@ -76,13 +101,20 @@ function SingleTabContent({
             {tabData && <Overview chartData={tabData} />}
           </CardContent>
         </Card>
-        <Card className="col-span-3">
+        <Card className="col-span-1 sm:col-span-3">
           <CardHeader>
-            <CardTitle>Recent Winners</CardTitle>
-            <CardDescription>You made 265 sales this month.</CardDescription>
+            <CardTitle>Recent Slams</CardTitle>
+            <CardDescription>
+              Short description on recent slams.
+            </CardDescription>
           </CardHeader>
           <CardContent>
-            <RecentSales />
+            <RecentSlams
+              tour={tour}
+              tabValue={tabValue}
+              mensData={mensData}
+              womensData={womensData}
+            />
           </CardContent>
         </Card>
       </div>
