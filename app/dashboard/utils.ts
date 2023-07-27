@@ -1,10 +1,12 @@
 export interface SlamData {
   id: string;
   champion: string;
+  champion_id: string;
   ctry_champion: string;
   ctry_runner_up: string;
   major_number: number;
   runner_up: string;
+  runner_up_id: string;
   score_in_final: string;
   seed_champion: number;
   seed_runner_up: number;
@@ -12,6 +14,7 @@ export interface SlamData {
 }
 
 export interface ChampionInfo {
+  id: string;
   playerName: string;
   titles: number;
   nationality: string;
@@ -131,6 +134,7 @@ export const getTopTenPlayerChartData = (
       existingChampion.titles++;
     } else {
       result.push({
+        id: data.champion_id,
         playerName: data.champion,
         titles: 1,
         nationality: data.ctry_champion,

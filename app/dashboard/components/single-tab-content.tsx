@@ -20,6 +20,7 @@ import {
 import { useAtomValue } from "jotai";
 import { tourAtom } from "./tourSelect";
 import { useEffect } from "react";
+import Link from "next/link";
 
 export type TabsType =
   | "all"
@@ -40,14 +41,12 @@ function SingleTabContent({
   womensData,
 }: SingleTabContentProps) {
   const tour = useAtomValue(tourAtom);
-  console.log(tour);
   const { tabData, isLoading } = useGetTabContent(
     tour,
     tabValue,
     mensData,
     womensData
   );
-  console.log(tabData);
 
   useEffect(() => {
     console.log("tabData changed:", tabData);
@@ -73,7 +72,7 @@ function SingleTabContent({
                   <span className="block sm:hidden mr-2">{`${
                     index + 1
                   }.`}</span>
-                  {player.playerName}
+                  <Link href={`/player/${player.id}`}>{player.playerName}</Link>
                   <span className="font-normal ml-2 sm:ml-0">{`  - ${player.titles} titles`}</span>
                 </div>
                 <p className="ml-6 sm:ml-0 text-xs text-muted-foreground">
