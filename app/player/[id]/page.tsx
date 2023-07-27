@@ -4,10 +4,19 @@ import { DataTable } from "../components/data-table";
 import { MajorResult, columns } from "../components/columns";
 import { getSlamInfo } from "@/app/dashboard/utils";
 
-export async function generateStaticParams() {
-  const { data: players } = await supabase.from("atp_players").select("id");
+export async function generateStaticParams(): Promise<any[]> {
+  const { data: players, error } = await supabase.from("atp_players").select("id");
 
-  return players?.map(({ id }) => ({
+  if (error) {
+    console.error(error);
+  }
+
+  // Return empty array if no players
+  if (!players) {
+    return []; 
+  }
+
+  return players.map(({ id }) => ({
     id,
   }));
 }
