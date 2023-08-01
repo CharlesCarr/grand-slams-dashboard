@@ -9,6 +9,7 @@ function SeedButton({ players, finals }: any) {
       // 1. Have all player data and all finals data
       // Loop through each final in the finals data
       for (const final of finals) {
+        // either champion or runner_up
         const { runner_up } = final;
         console.log(runner_up);
 
@@ -20,7 +21,8 @@ function SeedButton({ players, finals }: any) {
           // If a matching player is found, update the grand_slam_mens table
           // with the player's ID as the champion_id
           const { data, error } = await supabase
-            .from("grand_slam_mens")
+            .from("grand_slam_womens")
+            // runner_up_id
             .update({ runner_up_id: player.id })
             .eq("runner_up", runner_up);
 

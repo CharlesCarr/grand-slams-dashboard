@@ -72,7 +72,7 @@ function SingleTabContent({
                   <span className="block sm:hidden mr-2">{`${
                     index + 1
                   }.`}</span>
-                  <Link href={`/player/${player.id}`}>{player.playerName}</Link>
+                  <Link href={`/player/${tour}/${player.id}`}>{player.playerName}</Link>
                   <span className="font-normal ml-2 sm:ml-0">{`  - ${player.titles} titles`}</span>
                 </div>
                 <p className="ml-6 sm:ml-0 text-xs text-muted-foreground">

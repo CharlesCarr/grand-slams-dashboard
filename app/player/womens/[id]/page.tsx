@@ -1,11 +1,13 @@
 import supabase from "@/utils/supabase";
 import { notFound } from "next/navigation";
-import { DataTable } from "../components/data-table";
-import { MajorResult, columns } from "../components/columns";
+import { DataTable } from "../../components/data-table";
+import { MajorResult, columns } from "../../components/columns";
 import { getSlamInfo } from "@/app/dashboard/utils";
 
 export async function generateStaticParams(): Promise<any[]> {
-  const { data: players, error } = await supabase.from("atp_players").select("id");
+  const { data: players, error } = await supabase
+    .from("wta_players")
+    .select("id");
 
   if (error) {
     console.error(error);
@@ -13,8 +15,10 @@ export async function generateStaticParams(): Promise<any[]> {
 
   // Return empty array if no players
   if (!players) {
-    return []; 
+    return [];
   }
+
+  console.log(players);
 
   return players.map(({ id }) => ({
     id,
@@ -25,13 +29,13 @@ export default async function Page({ params }: { params: { id: string } }) {
   const { id } = params;
 
   const { data: playerData } = await supabase
-    .from("atp_players")
+    .from("wta_players")
     .select()
     .eq("id", id)
     .single();
 
   const { data: playerResults } = await supabase
-    .from("grand_slam_mens")
+    .from("grand_slam_womens")
     .select()
     .or(`champion_id.eq.${id},runner_up_id.eq.${id}`)
     .order("year", { ascending: true })
