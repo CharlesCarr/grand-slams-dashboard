@@ -13,6 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import supabase from "@/utils/supabase";
 
 // This type is used to define the shape of our data.
 export type MajorResult = {
@@ -27,6 +28,22 @@ export type MajorResult = {
   // ctry_runner_up: string;
   score_in_final: string;
 };
+
+// // Click handler
+// async function handleViewPlayer(name: any) {
+//   // Lookup player ID by name from Supabase
+//   const playerData = await lookupPlayerId(name);
+//   console.log(playerData);
+
+//   // Redirect to player page
+//   router.push(`/players/${id}`);
+// }
+
+// // Supabase query
+// async function lookupPlayerId(name: any) {
+//   // Query to get player data by name
+//   return supabase.from("players").select("id").eq("name", name).single();
+// }
 
 export const columns: ColumnDef<MajorResult>[] = [
   {
@@ -81,6 +98,11 @@ export const columns: ColumnDef<MajorResult>[] = [
   {
     accessorKey: "champion",
     header: "Champion",
+    // cell: (info) => (
+    //   <Button onClick={() => handleViewPlayer(info.getValue())}>
+    //     {info.getValue()}
+    //   </Button>
+    // ),
   },
   {
     accessorKey: "runner_up",

@@ -19,8 +19,8 @@ export default async function DashboardPage() {
   return (
     <div className="flex-col md:flex">
       <div className="flex-1 space-y-4 p-8 pt-6">
-        <div className="flex items-center justify-between space-y-2">
-          <h1 className="text-2xl sm:text-4xl font-bold tracking-tight">
+        <div className="flex flex-col-reverse sm:flex-row items-center justify-between space-y-2">
+          <h1 className="text-4xl sm:text-4xl font-bold tracking-tight  mt-4 sm:mt-0">
             Grand Slam Titles
           </h1>
           <div className="flex items-center gap-3">

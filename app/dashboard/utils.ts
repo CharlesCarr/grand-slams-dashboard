@@ -102,8 +102,6 @@ export const getDataFilteredBySlam = (
     default:
       slamNum = 0;
   }
-  console.log("tabVale", tabValue, "slamNum", slamNum);
-  console.log("slamData", slamData);
 
   const filteredSlamData = slamData.filter((slam: SlamData) => {
     return slamNum === slam.major_number;

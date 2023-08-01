@@ -4,6 +4,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { TabsType } from "./single-tab-content";
 import { SlamData, getLastFourData, getSlamInfo } from "../utils";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 interface RecentSlamsProps {
   tour: string;
@@ -23,16 +24,28 @@ export function RecentSlams({
   const [recentSlams, setRecentSlams] = useState<SlamData[] | undefined>(
     undefined
   );
-  console.log("recentSlams", recentSlams);
 
   useEffect(() => {
     const tourData: SlamData[] = tour === "mens" ? mensData : womensData;
 
     if (tabValue === "all") {
-      const filteredSlams = tourData.filter(
-        ({ year }) => year === CURRENT_YEAR
+      // Step 1: Sort the array by year and major_number
+      const sortedArray = tourData.sort((a, b) => {
+        if (a.year !== b.year) {
+          return b.year - a.year; // Sort by year in descending order
+        } else {
+          return b.major_number - a.major_number; // If years are equal, sort by major_number in descending order
+        }
+      });
+
+      // Step 2: Filter the 4 most recent years of data
+      const filteredArray = sortedArray.filter(
+        (data, index) =>
+          index < 3 || // First 3 elements from the current year
+          (data.year === sortedArray[3].year && data.major_number === 4) // The element from the previous year with major_number 4
       );
-      setRecentSlams(filteredSlams);
+
+      setRecentSlams(filteredArray);
     } else {
       const lastFour = getLastFourData(tabValue, tourData);
       setRecentSlams(lastFour);
@@ -40,7 +53,7 @@ export function RecentSlams({
   }, [mensData, tabValue, tour, womensData]);
 
   return (
-    <div className="h-full w-full flex flex-col gap-10">
+    <div className="h-[250px] sm:h-[75%] w-full flex flex-col justify-around">
       {recentSlams
         ?.sort((a, b) => b.year - a.year)
         .map((slamData: SlamData) => {
@@ -52,11 +65,17 @@ export function RecentSlams({
                 <AvatarFallback>{abbr}</AvatarFallback>
               </Avatar>
               <div className="ml-4 space-y-1">
-                <p className="text-base font-medium leading-none mb-2">
-                  {tournament}
-                  <span className="font-normal">{` - ${slamData.champion} (${slamData.seed_champion})`}</span>
-                </p>
-                <p className="text-xs">
+                <div className="flex flex-col sm:flex-row gap-2 text-sm sm:text-base font-medium leading-none mb-2 sm:mb-0">
+                  <p>{tournament}</p>
+                  <Link
+                    className="font-normal text-sm sm:text-base flex gap-1"
+                    href={`/player/${tour}/${slamData.champion_id}`}
+                  >
+                    <span>{slamData.champion}</span>
+                    <span className="hidden sm:flex">{` (${slamData.seed_champion})`}</span>
+                  </Link>
+                </div>
+                <p className="hidden sm:block text-xs">
                   <span className="text-muted-foreground">{` def. ${slamData.runner_up} (${slamData.seed_runner_up}) (${slamData.score_in_final})`}</span>
                 </p>
               </div>

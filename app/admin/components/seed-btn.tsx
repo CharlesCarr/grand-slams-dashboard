@@ -11,11 +11,9 @@ function SeedButton({ players, finals }: any) {
       for (const final of finals) {
         // either champion or runner_up
         const { runner_up } = final;
-        console.log(runner_up);
 
         // Find the player whose name matches the champion
         const player = players.find((p: any) => p.player_name === runner_up);
-        console.log(player);
 
         if (player) {
           // If a matching player is found, update the grand_slam_mens table

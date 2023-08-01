@@ -3,9 +3,12 @@ import { notFound } from "next/navigation";
 import { DataTable } from "../../components/data-table";
 import { MajorResult, columns } from "../../components/columns";
 import { getSlamInfo } from "@/app/dashboard/utils";
+import BackButton from "../../components/back-btn";
 
 export async function generateStaticParams(): Promise<any[]> {
-  const { data: players, error } = await supabase.from("atp_players").select("id");
+  const { data: players, error } = await supabase
+    .from("atp_players")
+    .select("id");
 
   if (error) {
     console.error(error);
@@ -13,7 +16,7 @@ export async function generateStaticParams(): Promise<any[]> {
 
   // Return empty array if no players
   if (!players) {
-    return []; 
+    return [];
   }
 
   return players.map(({ id }) => ({
@@ -41,6 +44,12 @@ export default async function Page({ params }: { params: { id: string } }) {
     notFound();
   }
 
+  const playerTitles: number = playerResults.filter((result: any) => {
+    return result.champion === playerData.player_name;
+  }).length;
+
+  const finalWinPercentage = (playerTitles / playerResults.length) * 100;
+
   const playerResultsWithMajorName = playerResults.map((result: any) => {
     const transformedMajor = getSlamInfo(result.major_number);
     result.major_number = transformedMajor.tournament;
@@ -55,12 +64,29 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   return (
     <div className="container mx-auto py-10">
-      <h1 className="text-2xl sm:text-4xl font-bold tracking-tight">
+      <BackButton />
+      <h1 className="text-2xl sm:text-4xl font-bold tracking-tight mt-4">
         Grand Slam Titles:
         <span className="text-muted-foreground ml-4">
           {playerData.player_name}
         </span>
       </h1>
+
+      <div className="flex w-full gap-10 py-6">
+        <div>
+          <p className="text-lg font-bold">Player Info:</p>
+          <p>{`Name: ${playerData.player_name}`}</p>
+          <p>{`Country: ${playerData.nationality}`}</p>
+        </div>
+
+        <div>
+          <p className="text-lg font-bold">Grand Slam Finals Stats:</p>
+          <p>{`Titles: ${playerTitles}`}</p>
+          <p>{`Appearances: ${playerResults.length}`}</p>
+          <p>{`Win Percentage: ${finalWinPercentage.toFixed(1)}%`}</p>
+        </div>
+      </div>
+
       <DataTable columns={columns} data={playerResultsWithMajorName} />
     </div>
   );

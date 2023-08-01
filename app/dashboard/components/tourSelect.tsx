@@ -13,7 +13,6 @@ export const tourAtom = atom("mens");
 
 const TourSelect = () => {
   const [tour, setTour] = useAtom(tourAtom);
-  console.log(tour);
 
   return (
     <Select value={tour} onValueChange={setTour}>

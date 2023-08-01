@@ -10,11 +10,9 @@ async function Page() {
   //   const { data: all_atp_finals } = await supabase.from("grand_slam_mens").select();
   // WOMENS:
   const { data: wta_players } = await supabase.from("wta_players").select();
-  console.log('wta players', wta_players);
   const { data: all_wta_finals } = await supabase
     .from("grand_slam_womens")
     .select();
-  console.log('all-wta-finals', all_wta_finals);
 
   return (
     <div className="w-full max-w-lg mx-auto flex justify-center items-center">

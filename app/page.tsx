@@ -18,24 +18,19 @@ export default function IndexPage() {
             Click the button below to enter the dashboard.
           </CardDescription>
         </CardHeader>
-        <CardContent className="flex flex-col px-10 gap-4">
-          <p className="text-base">
+        <CardContent className="flex flex-col px-6 sm:px-10 gap-4">
+          <p className="text-sm sm:text-base">
             This is a tennis grand slam title dashboard to display data
             visualizations for players in the Open Era.
           </p>
-          <p className="text-sm">
-            WIP: I started building this project to expand my Next.js 13
-            knowledge (app router/server components) as well as try out
-            shadcn/ui (Tailwind/Radix) modern styling approach.
-          </p>
 
           <div className="pb-2">
-            <p className="mb-1">Feature / Functionality Roadmap:</p>
-            <ul className="list-disc ml-8 text-sm flex flex-col gap-1">
-              <li>Dynamic routes for each player to provide additional info</li>
-              <li>Framer Motion animations</li>
-              <li>US Open specific content for the upcoming tournament</li>
-              <li>Additional filters for more granularity (ex. Country)</li>
+            <p className="mb-1 text-sm sm:text-base">Feature Roadmap:</p>
+            <ul className="list-disc ml-5 sm:ml-8 text-xs sm:text-sm flex flex-col gap-1">
+              <li>User profiles for saving preferences and searches</li>
+              <li>More stats / data on each player page</li>
+              <li>US Open specific content for the upcoming major</li>
+              <li>Additional data visualizations and filtering</li>
             </ul>
           </div>
         </CardContent>

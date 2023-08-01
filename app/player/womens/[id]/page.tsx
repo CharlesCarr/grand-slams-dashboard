@@ -18,8 +18,6 @@ export async function generateStaticParams(): Promise<any[]> {
     return [];
   }
 
-  console.log(players);
-
   return players.map(({ id }) => ({
     id,
   }));

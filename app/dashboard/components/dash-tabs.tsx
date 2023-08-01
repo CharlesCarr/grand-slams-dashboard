@@ -9,13 +9,27 @@ function DashTabs({ mensData, womensData }: any) {
   const [activeTab, setActiveTab] = useState<any>("all");
 
   return (
-    <Tabs value={activeTab} className="sm:space-y-4" onValueChange={setActiveTab}>
-      <TabsList className="w-full sm:w-fit">
-        <TabsTrigger value="all" className="text-xs sm:text-base">All</TabsTrigger>
-        <TabsTrigger value="australian-open" className="text-xs sm:text-base">Australian Open</TabsTrigger>
-        <TabsTrigger value="french-open" className="text-xs sm:text-base">French Open</TabsTrigger>
-        <TabsTrigger value="wimbledon" className="text-xs sm:text-base">Wimbledon</TabsTrigger>
-        <TabsTrigger value="us-open" className="text-xs sm:text-base">US Open</TabsTrigger>
+    <Tabs
+      value={activeTab}
+      className="sm:space-y-4"
+      onValueChange={setActiveTab}
+    >
+      <TabsList className="w-full overflow-x-auto justify-start items-center h-[40px] sm:h-fit sm:w-fit">
+        <TabsTrigger value="all" className="text-xs sm:text-base">
+          All
+        </TabsTrigger>
+        <TabsTrigger value="australian-open" className="text-xs sm:text-base">
+          Australian Open
+        </TabsTrigger>
+        <TabsTrigger value="french-open" className="text-xs sm:text-base">
+          French Open
+        </TabsTrigger>
+        <TabsTrigger value="wimbledon" className="text-xs sm:text-base">
+          Wimbledon
+        </TabsTrigger>
+        <TabsTrigger value="us-open" className="text-xs sm:text-base">
+          US Open
+        </TabsTrigger>
       </TabsList>
       <SingleTabContent
         tabValue={activeTab}

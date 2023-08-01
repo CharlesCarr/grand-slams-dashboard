@@ -72,7 +72,9 @@ function SingleTabContent({
                   <span className="block sm:hidden mr-2">{`${
                     index + 1
                   }.`}</span>
-                  <Link href={`/player/${tour}/${player.id}`}>{player.playerName}</Link>
+                  <Link href={`/player/${tour}/${player.id}`}>
+                    {player.playerName}
+                  </Link>
                   <span className="font-normal ml-2 sm:ml-0">{`  - ${player.titles} titles`}</span>
                 </div>
                 <p className="ml-6 sm:ml-0 text-xs text-muted-foreground">
@@ -96,7 +98,7 @@ function SingleTabContent({
           <CardHeader>
             <CardTitle>Leaderboard</CardTitle>
           </CardHeader>
-          <CardContent className="pl-2">
+          <CardContent className="pl-0 sm:pl-2 w-full">
             {tabData && <Overview chartData={tabData} />}
           </CardContent>
         </Card>
@@ -104,10 +106,10 @@ function SingleTabContent({
           <CardHeader>
             <CardTitle>Recent Slams</CardTitle>
             <CardDescription>
-              Short description on recent slams.
+              The four most recent major finals.
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="h-full">
             <RecentSlams
               tour={tour}
               tabValue={tabValue}
