@@ -18,7 +18,7 @@ import {
   getTabDisplayName,
 } from "../utils";
 import { useAtomValue } from "jotai";
-import { tourAtom } from "./tourSelect";
+import { tourAtom } from "./tour-select";
 import { useEffect } from "react";
 import Link from "next/link";
 

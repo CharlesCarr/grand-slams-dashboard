@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 import supabase from "@/utils/supabase";
-import TourSelect from "./components/tourSelect";
 import DashTabs from "./components/dash-tabs";
-import { ModeToggle } from "@/components/mode-toggle";
+import DashHeader from "./components/dash-header";
+
 export const metadata: Metadata = {
   title: "Dashboard",
   description: "Example dashboard app using the components.",
@@ -19,15 +19,7 @@ export default async function DashboardPage() {
   return (
     <div className="flex-col md:flex">
       <div className="flex-1 space-y-4 p-8 pt-6">
-        <div className="flex flex-col-reverse sm:flex-row items-center justify-between space-y-2">
-          <h1 className="text-4xl sm:text-4xl font-bold tracking-tight  mt-4 sm:mt-0">
-            Grand Slam Titles
-          </h1>
-          <div className="flex items-center gap-3">
-            <TourSelect />
-            <ModeToggle />
-          </div>
-        </div>
+        <DashHeader />
         <DashTabs mensData={mensData} womensData={womensData} />
       </div>
     </div>
